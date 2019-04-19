@@ -1,5 +1,3 @@
-#![cfg_attr(feature = "try-from", feature(try_from))]
-
 extern crate cast;
 extern crate fpa;
 
@@ -7,7 +5,6 @@ use cast::*;
 use fpa::*;
 
 #[allow(unused_imports)]
-#[cfg(feature = "try-from")]
 use std::convert::TryFrom;
 
 #[cfg(test)]

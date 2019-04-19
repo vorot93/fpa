@@ -79,7 +79,6 @@
 //!
 
 #![cfg_attr(feature = "const-fn", feature(const_fn))]
-#![cfg_attr(feature = "try-from", feature(try_from))]
 #![deny(missing_docs)]
 #![deny(warnings)]
 #![no_std]
@@ -92,7 +91,6 @@ use core::cmp::Ordering;
 use core::marker::PhantomData;
 use core::{fmt, ops};
 
-#[cfg(feature = "try-from")]
 use core::convert::TryFrom;
 
 use cast::{From as CastFrom, Error, f32, f64, i16, i32, i64, i8, isize, u16, u32, u64, u8, usize};
@@ -191,8 +189,6 @@ macro_rules! q {
                 FRAC::to_u8()
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl<FRAC> TryFrom<f32> for Q<$bits, FRAC>
         where
             FRAC: Cmp<U0, Output = Greater> +
@@ -220,8 +216,6 @@ macro_rules! q {
                 })
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl<FRAC> TryFrom<f64> for Q<$bits, FRAC>
         where
             FRAC: Cmp<U0, Output = Greater> +
@@ -907,8 +901,6 @@ macro_rules! cast {
                 i64(i32(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i64> for $largest32 {
             type Error = Error;
 
@@ -939,7 +931,6 @@ macro_rules! cast {
             }
 
             }
-        #[cfg(feature = "try-from")]
         impl TryFrom<i32> for $largest32 {
             type Error = Error;
 
@@ -972,8 +963,6 @@ macro_rules! cast {
                 $largest32::from_bits(i32(x) << $largest32::fbits())
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$largest32> for i8 {
             type Error = Error;
 
@@ -1019,8 +1008,6 @@ macro_rules! cast {
                 i16(x).map($largest32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$largest32> for u64 {
             type Error = Error;
 
@@ -1036,8 +1023,6 @@ macro_rules! cast {
                 u64(i32(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u64> for $largest32 {
             type Error = Error;
 
@@ -1053,8 +1038,6 @@ macro_rules! cast {
                 i16(x).map($largest32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$largest32> for u32 {
             type Error = Error;
 
@@ -1070,8 +1053,6 @@ macro_rules! cast {
                 u32(i32(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u32> for $largest32 {
             type Error = Error;
 
@@ -1087,8 +1068,6 @@ macro_rules! cast {
                 i16(x).map($largest32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$largest32> for u16 {
             type Error = Error;
 
@@ -1107,8 +1086,6 @@ macro_rules! cast {
 
         // Special case handled below
         // impl cast::From<u16> for $largest32 {}
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$largest32> for u8 {
             type Error = Error;
 
@@ -1156,8 +1133,6 @@ macro_rules! cast {
                                            $largest32::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$largest32> for $large32 {
                 type Error = Error;
 
@@ -1194,8 +1169,6 @@ macro_rules! cast {
                                            $largest32::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$largest32> for $medium32 {
                 type Error = Error;
 
@@ -1228,8 +1201,6 @@ macro_rules! cast {
                     $largest32($medium32(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$largest32> for $medium16 {
                 type Error = Error;
 
@@ -1263,8 +1234,6 @@ macro_rules! cast {
                                            $largest32::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$largest32> for $small32 {
                 type Error = Error;
 
@@ -1297,8 +1266,6 @@ macro_rules! cast {
                     $largest32($small32(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$largest32> for $small16 {
                 type Error = Error;
 
@@ -1328,8 +1295,6 @@ macro_rules! cast {
                     $largest32($small32(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$largest32> for $small8 {
                 type Error = Error;
 
@@ -1386,8 +1351,6 @@ macro_rules! cast {
                 i64(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i64> for $large32 {
             type Error = Error;
 
@@ -1417,8 +1380,6 @@ macro_rules! cast {
                 i32(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i32> for $large32 {
             type Error = Error;
 
@@ -1448,8 +1409,6 @@ macro_rules! cast {
                 (x.bits >> $large32::fbits()) as i16
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i16> for $large32 {
             type Error = Error;
 
@@ -1498,8 +1457,6 @@ macro_rules! cast {
                 i8(x).map($large32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$large32> for u64 {
             type Error = Error;
 
@@ -1515,8 +1472,6 @@ macro_rules! cast {
                 u64(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u64> for $large32 {
             type Error = Error;
 
@@ -1532,8 +1487,6 @@ macro_rules! cast {
                 i8(x).map($large32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$large32> for u32 {
             type Error = Error;
 
@@ -1549,8 +1502,6 @@ macro_rules! cast {
                 u32(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u32> for $large32 {
             type Error = Error;
 
@@ -1566,8 +1517,6 @@ macro_rules! cast {
                 i8(x).map($large32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$large32> for u16 {
             type Error = Error;
 
@@ -1583,8 +1532,6 @@ macro_rules! cast {
                 u16(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u16> for $large32 {
             type Error = Error;
 
@@ -1600,8 +1547,6 @@ macro_rules! cast {
                 i8(x).map($large32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$large32> for u8 {
             type Error = Error;
 
@@ -1650,8 +1595,6 @@ macro_rules! cast {
                 i64(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i64> for $large16 {
             type Error = Error;
 
@@ -1681,8 +1624,6 @@ macro_rules! cast {
                 i32(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i32> for $large16 {
             type Error = Error;
 
@@ -1713,7 +1654,6 @@ macro_rules! cast {
 
             }
         }
-        #[cfg(feature = "try-from")]
         impl TryFrom<i16> for $large16 {
             type Error = Error;
 
@@ -1762,8 +1702,6 @@ macro_rules! cast {
                 i8(x).map($large16)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$large16> for u64 {
             type Error = Error;
 
@@ -1779,8 +1717,6 @@ macro_rules! cast {
                 u64(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u64> for $large16 {
             type Error = Error;
 
@@ -1796,8 +1732,6 @@ macro_rules! cast {
                 i8(x).map($large16)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$large16> for u32 {
             type Error = Error;
 
@@ -1813,8 +1747,6 @@ macro_rules! cast {
                 u32(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u32> for $large16 {
             type Error = Error;
 
@@ -1830,8 +1762,6 @@ macro_rules! cast {
                 i8(x).map($large16)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$large16> for u16 {
             type Error = Error;
 
@@ -1847,8 +1777,6 @@ macro_rules! cast {
                 u16(i16(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u16> for $large16 {
             type Error = Error;
 
@@ -1864,8 +1792,6 @@ macro_rules! cast {
                 i8(x).map($large16)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$large16> for u8 {
             type Error = Error;
 
@@ -1935,8 +1861,6 @@ macro_rules! cast {
                                          $large32::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large32> for $medium32 {
                 type Error = Error;
 
@@ -1970,7 +1894,6 @@ macro_rules! cast {
                 }
 
                 }
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large32> for $medium16 {
                 type Error = Error;
 
@@ -2000,8 +1923,6 @@ macro_rules! cast {
                     $large16($medium16(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large16> for $medium32 {
                 type Error = Error;
 
@@ -2033,8 +1954,6 @@ macro_rules! cast {
                                          $large16::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large16> for $medium16 {
                 type Error = Error;
 
@@ -2070,8 +1989,6 @@ macro_rules! cast {
                                          $large32::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large32> for $small32 {
                 type Error = Error;
 
@@ -2104,8 +2021,6 @@ macro_rules! cast {
                     $large32($small32(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large32> for $small16 {
                 type Error = Error;
 
@@ -2135,8 +2050,6 @@ macro_rules! cast {
                     $large32($small32(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large32> for $small8 {
                 type Error = Error;
 
@@ -2166,8 +2079,6 @@ macro_rules! cast {
                     $large16($small16(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large16> for $small32 {
                 type Error = Error;
 
@@ -2199,8 +2110,6 @@ macro_rules! cast {
                                          $large16::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large16> for $small16 {
                 type Error = Error;
 
@@ -2232,8 +2141,6 @@ macro_rules! cast {
                     $large16($small16(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$large16> for $small8 {
                 type Error = Error;
 
@@ -2290,8 +2197,6 @@ macro_rules! cast {
                 i64(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i64> for $medium32 {
             type Error = Error;
 
@@ -2321,8 +2226,6 @@ macro_rules! cast {
                 i32(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i32> for $medium32 {
             type Error = Error;
 
@@ -2352,8 +2255,6 @@ macro_rules! cast {
                 i16(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i16> for $medium32 {
             type Error = Error;
 
@@ -2383,8 +2284,6 @@ macro_rules! cast {
                 (x.bits >> $medium32::fbits()) as i8
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i8> for $medium32 {
             type Error = Error;
 
@@ -2417,8 +2316,6 @@ macro_rules! cast {
                 i8(x).and_then($medium32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium32> for u64 {
             type Error = Error;
 
@@ -2434,8 +2331,6 @@ macro_rules! cast {
                 u64(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u64> for $medium32 {
             type Error = Error;
 
@@ -2451,8 +2346,6 @@ macro_rules! cast {
                 i8(x).and_then($medium32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium32> for u32 {
             type Error = Error;
 
@@ -2468,8 +2361,6 @@ macro_rules! cast {
                 u32(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u32> for $medium32 {
             type Error = Error;
 
@@ -2485,8 +2376,6 @@ macro_rules! cast {
                 i8(x).and_then($medium32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium32> for u16 {
             type Error = Error;
 
@@ -2502,8 +2391,6 @@ macro_rules! cast {
                 u16(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u16> for $medium32 {
             type Error = Error;
 
@@ -2519,8 +2406,6 @@ macro_rules! cast {
                 i8(x).and_then($medium32)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium32> for u8 {
             type Error = Error;
 
@@ -2536,8 +2421,6 @@ macro_rules! cast {
                 u8(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u8> for $medium32 {
             type Error = Error;
 
@@ -2589,8 +2472,6 @@ macro_rules! cast {
                 i64(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i64> for $medium16 {
             type Error = Error;
 
@@ -2620,8 +2501,6 @@ macro_rules! cast {
                 i32(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i32> for $medium16 {
             type Error = Error;
 
@@ -2651,8 +2530,6 @@ macro_rules! cast {
                 i16(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i16> for $medium16 {
             type Error = Error;
 
@@ -2682,8 +2559,6 @@ macro_rules! cast {
                 (x.bits >> $medium16::fbits()) as i8
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i8> for $medium16 {
             type Error = Error;
 
@@ -2716,8 +2591,6 @@ macro_rules! cast {
                 i8(x).and_then($medium16)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium16> for u64 {
             type Error = Error;
 
@@ -2733,8 +2606,6 @@ macro_rules! cast {
                 u64(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u64> for $medium16 {
             type Error = Error;
 
@@ -2750,8 +2621,6 @@ macro_rules! cast {
                 i8(x).and_then($medium16)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium16> for u32 {
             type Error = Error;
 
@@ -2767,8 +2636,6 @@ macro_rules! cast {
                 u32(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u32> for $medium16 {
             type Error = Error;
 
@@ -2784,8 +2651,6 @@ macro_rules! cast {
                 i8(x).and_then($medium16)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium16> for u16 {
             type Error = Error;
 
@@ -2801,8 +2666,6 @@ macro_rules! cast {
                 u16(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u16> for $medium16 {
             type Error = Error;
 
@@ -2818,8 +2681,6 @@ macro_rules! cast {
                 i8(x).and_then($medium16)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium16> for u8 {
             type Error = Error;
 
@@ -2835,8 +2696,6 @@ macro_rules! cast {
                 u8(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u8> for $medium16 {
             type Error = Error;
 
@@ -2882,8 +2741,6 @@ macro_rules! cast {
                 i64(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i64> for $medium8 {
             type Error = Error;
 
@@ -2914,7 +2771,6 @@ macro_rules! cast {
             }
 
             }
-        #[cfg(feature = "try-from")]
         impl TryFrom<i32> for $medium8 {
             type Error = Error;
 
@@ -2944,8 +2800,6 @@ macro_rules! cast {
                 i16(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i16> for $medium8 {
             type Error = Error;
 
@@ -2975,8 +2829,6 @@ macro_rules! cast {
                 (x.bits >> $medium8::fbits()) as i8
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<i8> for $medium8 {
             type Error = Error;
 
@@ -3009,8 +2861,6 @@ macro_rules! cast {
                 i8(x).and_then($medium8)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium8> for u64 {
             type Error = Error;
 
@@ -3026,8 +2876,6 @@ macro_rules! cast {
                 u64(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u64> for $medium8 {
             type Error = Error;
 
@@ -3043,8 +2891,6 @@ macro_rules! cast {
                 i8(x).and_then($medium8)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium8> for u32 {
             type Error = Error;
 
@@ -3060,8 +2906,6 @@ macro_rules! cast {
                 u32(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u32> for $medium8 {
             type Error = Error;
 
@@ -3077,8 +2921,6 @@ macro_rules! cast {
                 i8(x).and_then($medium8)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium8> for u16 {
             type Error = Error;
 
@@ -3094,8 +2936,6 @@ macro_rules! cast {
                 u16(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u16> for $medium8 {
             type Error = Error;
 
@@ -3111,8 +2951,6 @@ macro_rules! cast {
                 i8(x).and_then($medium8)
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<$medium8> for u8 {
             type Error = Error;
 
@@ -3128,8 +2966,6 @@ macro_rules! cast {
                 u8(i8(x))
             }
         }
-
-        #[cfg(feature = "try-from")]
         impl TryFrom<u8> for $medium8 {
             type Error = Error;
 
@@ -3248,8 +3084,6 @@ macro_rules! cast {
                                           $medium32::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium32> for $small32 {
                 type Error = Error;
 
@@ -3281,8 +3115,6 @@ macro_rules! cast {
                     $medium32($small32(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium32> for $small16 {
                 type Error = Error;
 
@@ -3312,8 +3144,6 @@ macro_rules! cast {
                     $medium32($small32(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium32> for $small8 {
                 type Error = Error;
 
@@ -3343,8 +3173,6 @@ macro_rules! cast {
                     $medium16($small16(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium16> for $small32 {
                 type Error = Error;
 
@@ -3376,7 +3204,6 @@ macro_rules! cast {
                                           $medium16::fbits()))
                 }
             }
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium16> for $small16 {
                 type Error = Error;
 
@@ -3408,8 +3235,6 @@ macro_rules! cast {
                     $medium16($small16(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium16> for $small8 {
                 type Error = Error;
 
@@ -3439,8 +3264,6 @@ macro_rules! cast {
                     $medium8($small8(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium8> for $small32 {
                 type Error = Error;
 
@@ -3470,8 +3293,6 @@ macro_rules! cast {
                     $medium8($small8(x))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium8> for $small16 {
                 type Error = Error;
 
@@ -3503,8 +3324,6 @@ macro_rules! cast {
                                          $medium8::fbits()))
                 }
             }
-
-            #[cfg(feature = "try-from")]
             impl TryFrom<$medium8> for $small8 {
                 type Error = Error;
 
@@ -3571,7 +3390,6 @@ cast! {
 macro_rules! to_ixx {
     ($ixx:ident; $($q:ident),+) => {
         $(
-            #[cfg(feature = "try-from")]
             impl TryFrom<$q> for $ixx {
                 type Error = Error;
 
@@ -3641,8 +3459,6 @@ to_ixx!(i16;
         I19F13,
         I18F14,
         I17F15);
-
-#[cfg(feature = "try-from")]
 impl TryFrom<u16> for I16F16 {
     type Error = Error;
 
@@ -3691,8 +3507,6 @@ impl cast::From<I8F24> for i8 {
 }
 
 to_ixx!(i8; I15F17, I14F18, I13F19, I12F20, I11F21, I10F22, I9F23);
-
-#[cfg(feature = "try-from")]
 impl TryFrom<u8> for I8F24 {
     type Error = Error;
 
@@ -3726,8 +3540,6 @@ impl cast::From<I8F8> for i8 {
 }
 
 to_ixx!(i8; I15F1, I14F2, I13F3, I12F4, I11F5, I10F6, I9F7);
-
-#[cfg(feature = "try-from")]
 impl TryFrom<u8> for I8F8 {
     type Error = Error;
 

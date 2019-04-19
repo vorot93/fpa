@@ -134,11 +134,9 @@ fn main() {
                 cast_asserts.push(quote! {
                     assert_eq!(f64(#qx_name(#qy_name(0.5_f64).unwrap()).unwrap()), 0.5);
                 });
-                if cfg!(feature = "try-from") {
-                    try_from_asserts.push(quote! {
-                        assert_eq!(f64::from(#qx_name::try_from(#qy_name::try_from(0.5_f64).unwrap()).unwrap()), 0.5);
-                    });
-                }
+                try_from_asserts.push(quote! {
+                    assert_eq!(f64::from(#qx_name::try_from(#qy_name::try_from(0.5_f64).unwrap()).unwrap()), 0.5);
+                });
             } else {
                 cast_asserts.push(quote! {
                     assert_eq!(f64(#qx_name(#qy_name(0.5_f64).unwrap())), 0.5);
@@ -163,7 +161,6 @@ fn main() {
                 }
 
                 #[test]
-                #[cfg(feature = "try-from")]
                 fn try_from() {
                     #(#try_from_asserts)*
                 }
@@ -201,7 +198,7 @@ fn main() {
                 cast_asserts.push(quote! {
                     assert_eq!(#p_name(#q_name(#f).unwrap()).unwrap(), #i as #p_name);
                 });
-                if cfg!(feature = "try-from") && !p.is_pointer_sized() {
+                if !p.is_pointer_sized() {
                     try_from_asserts.push(quote! {
                         assert_eq!(#p_name::try_from(#q_name::try_from(#f).unwrap()).unwrap(), #i as #p_name);
                     });
@@ -232,7 +229,6 @@ fn main() {
                 }
 
                 #[test]
-                #[cfg(feature = "try-from")]
                 fn try_from() {
                     #(#try_from_asserts)*
                 }
@@ -275,7 +271,7 @@ fn main() {
                 cast_asserts.push(quote! {
                     assert_eq!(f64(#q_name(#i as #p_name).unwrap()), #i as f64);
                 });
-                if cfg!(feature = "try-from") && !p.is_pointer_sized() {
+                if !p.is_pointer_sized() {
                     try_from_asserts.push(quote! {
                         assert_eq!(f64::from(#q_name::try_from(#i as #p_name).unwrap()), #i as f64);
                     });
@@ -297,7 +293,6 @@ fn main() {
                 }
 
                 #[test]
-                #[cfg(feature = "try-from")]
                 fn try_from() {
                     #(#try_from_asserts)*
                 }
